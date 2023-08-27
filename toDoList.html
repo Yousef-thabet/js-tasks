@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>do list</title>
+    
+
+
+
+</head>
+<body>
+<section>
+    <div class="name">
+        <h1>to do list</h1>
+    </div>
+    <div class="task">
+        <input
+        type="text" 
+        placeholder="task to be done" 
+        id="task">
+        <button 
+        onclick="add()" 
+        id="push">add </button>
+    </div>
+    <div class="list-task">
+        <table>
+            <tr >
+                <th class="th">task</th>
+                <th>delete</th>
+            </tr>
+            <tbody id="tbody">
+               
+            </tbody>
+        </table>
+    </div>
+</section>
+   <!-- -----------  style  --------------  -->
+    <style>
+        *{
+            margin: 0;
+            padding:0;
+        }
+        body{
+            background: linear-gradient( #658864,#B7B78A);
+            width: 100%;
+            height: 100vh;
+            text-align: center;
+            
+        }
+        section{
+            margin: auto;
+             width: 50%;
+            padding: 10px;
+            text-align: center;
+
+            
+           
+            
+        }
+        .name{
+            font-size: 45px;
+            font-weight: 600;
+            color:#eeeeee;
+            margin: 80px 0;
+        }
+        .task{
+            width: 80%;
+            height: 60px;
+            background-color: #dddddd;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(48, 46, 77, 0.15);
+            display:inline-block;
+
+        }
+        .task input{
+            border:none;
+
+            background-color: #eeeeee;
+            width:70%;
+            height:30px;
+            margin: 10px 25px;
+            padding: 5px;
+            float: left;
+        }
+        .task input:focus{
+            border-radius: 5px;
+            scale:1.1;
+
+        }
+        .task button{
+            border:none;
+            background-color: #658864;
+            width:60px;
+            height:30px;
+            margin-top: 15px;
+            padding: 5px;
+            border-radius: 10px;
+            color: #eeeeee;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        .list-task table button:hover,
+        .task button:hover{
+            scale: 1.2;
+            background-color: #eeeeee;
+            color: #658864;
+        }
+        .list-task table button:active,
+        .task button:active{
+            scale: 1.2;
+            background-color: #B7B78A;
+            color:#658864;
+        }
+        .list-task{
+            width: 80%;
+            min-height: 400px;
+
+            background-color: #dddddd;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(48, 46, 77, 0.15);
+            display:inline-block;
+            margin-top: 60px;
+            text-align: center;
+        }
+        .list-task table{
+       
+            width: 100%;
+
+
+        }
+        .list-task table .th{
+            text-transform: uppercase;
+            padding: 5px;
+            font-size: 22px;
+        }
+        .list-task table .th{
+           width: 80%;
+  
+        }
+        .list-task table button{
+            width: 80%;
+            border:none;
+            background-color: #658864;
+            padding: 5px;
+            border-radius: 10px;
+            color: #eeeeee;
+            cursor: pointer;
+            text-transform: uppercase;
+
+        }
+    </style>
+    <!-- -----------  script  ------------ -->
+    <script>
+        let creatTask =document.getElementById('task');
+        let push =document.getElementById('push');
+        let del = document.getElementById('delete');
+        
+        let dataTask;
+        creatTask.focus();
+   // press key -- enter  --
+   creatTask.addEventListener('keypress',function(event){
+            if(event.key ==="Enter"){
+                event.preventDefault();
+                push.click();
+                
+            }
+        })
+
+    //    --- create data
+            dataTask =[];
+        if(localStorage.tasks != null){
+        dataTask = JSON.parse(localStorage.tasks)
+            }else{dataTask =[];}
+
+        
+        function add(){
+           
+            if(creatTask.value == 0 ){
+             alert('please Enter a Task');
+           creatTask.focus();       
+        }else{
+
+            dataTask.push(creatTask.value);
+            localStorage.setItem('tasks', JSON.stringify(dataTask))
+            creatTask.value="";
+        }
+        showData();
+    }
+    // ---  show data
+    function showData(){
+        let table='';
+    for(let i = 0; i<dataTask.length; i++){
+        table += `
+                <tr>
+                <td  >${dataTask[i]}</td>
+                <td><button onclick='deleteData(${i}) ' id="delete">del</button></td>
+                </tr>
+        `
+        document.getElementById('tbody').innerHTML = table;
+    }
+
+}
+//  ----- delete data
+function deleteData(i){
+    dataTask.splice(i,1);
+    localStorage.tasks= JSON.stringify(dataTask);
+    showData();
+    if(dataTask[i]== undefined){
+        document.getElementById('tbody').innerHTML ="";
+        }
+}
+showData();
+    </script>
+    
+</body>
+</html>

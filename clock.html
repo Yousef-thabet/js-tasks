@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="clock.css">
+    <title>clock</title>
+    <style>
+    .clock{
+   background-color: #3F1D38;
+   height: 100vh;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   color: white;
+    
+}
+
+.clock__face{
+    border: 3px solid white;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    position: relative;
+}
+.hand{
+    height: 140px;
+    width: 4px;
+    transform-origin: center bottom;
+    transform: rotate(0deg);
+    position: absolute;
+}
+
+.hand-hours{
+   background: #D67BFF;
+   
+}
+.hand-minutes{
+    background: #FFB6D9;
+    width: 3px;
+    
+
+}
+
+.hand-seconds{
+    background: #FEFFAC;
+    width: 2px;
+    transform: rotate(360deg);
+}
+    </style>
+</head>
+<body>
+    <div class="clock">
+        <div class="clock__face">
+            <div class="hand hand-hours" id="hours"></div>
+            <div class="hand hand-minutes" id="minutes"></div>
+            <div class="hand hand-seconds" id="seconds"></div>
+        </div>
+    </div>
+    <script >
+    window.addEventListener("DOMContentLoaded", () => {
+    setInterval( () =>{
+        const now = new Date() ;
+        const hours = now.getHours()% 12;
+        const minutes = now.getMinutes();
+        const seconds = now.getSeconds();
+        document.getElementById("hours").style.transform = `rotate(${30 * hours}deg)`;
+        document.getElementById("minutes").style.transform = `rotate(${6 * minutes}deg)`;
+        document.getElementById("seconds").style.transform = `rotate(${6 * seconds}deg)`;
+    }, 1000)
+})
+    </script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{margin: 0;padding: 0;}
+        body{
+            background-color: #F5EDCE;
+           
+        }
+        .container{
+            width:900px;
+            height: 80%;
+            margin:10px auto;
+            display:flex;
+            background-color: #609EA2;
+            box-shadow: 5px 5px 10px gray;
+
+            padding:15px;
+            text-align: center;
+            flex-direction: column;
+
+        }
+        .name{
+            width: 100%;
+            font-size: 35px;
+            color:#F5EDCE;
+
+
+        }
+        .name p{
+            cursor: pointer;
+            display:inline-block;
+            border-radius: 10px;
+            background-color: #F5EDCE;
+            color:#609EA2;
+            margin: 5px;
+            padding: 5px;
+        }
+        .name p:hover{
+            background-color: #609EA2;
+            color:#F5EDCE;
+            border: 1px solid #F5EDCE;
+        }
+        .game{
+           background-color: #F0EEED;
+            width: 95%;
+            height: 700px;
+            margin: auto;
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .box{
+            width: 30%;
+            height: 200px;
+            margin: 10px;
+            background-color: #609EA2;
+            font-size: 100px;
+           font-weight: 600;
+           cursor: pointer;
+        }
+        .box span{
+            margin-top: 40px;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="name">
+            <h1 id="name"><span  style="color:#C92C6D">X</span>
+                 & <span id="o" style=" color:#332C39;">O</span> game  </h1><p onclick='reload()'>Reload</p>
+        </div>
+        <div class="game">
+            <div id='box1'class="box" onclick="game(this.id)"></div>
+            <div id='box2'class="box" onclick="game(this.id)"></div>
+            <div id='box3'class="box" onclick="game(this.id)"></div>
+
+            <div id='box4'class="box" onclick="game(this.id)"></div>
+            <div id='box5'class="box" onclick="game(this.id)"></div>
+            <div id='box6'class="box" onclick="game(this.id)"></div>
+
+            <div id='box7'class="box" onclick="game(this.id)"></div>
+            <div id='box8'class="box" onclick="game(this.id)"></div>
+            <div id='box9'class="box" onclick="game(this.id)"></div>
+        </div>
+    </div>
+    
+<!-- script -->
+<script>
+    let name =document.getElementById('name');
+    let turn ='x';
+    let boxs =[];
+    function game(id){
+        let element =document.getElementById(id);
+        
+        if(turn ==='x' && element.innerHTML ==''){
+            element.innerHTML=`<span id="x" style="color:#C92C6D">X</span>`
+           turn ='o';
+           winner();
+
+        }else if(turn ==='o' && element.innerHTML ==''){
+            element.innerHTML=`<span  style=" color:#332C39;">O</span>`
+            turn='x';
+            
+            winner();
+        }
+        
+    }
+    function reload(){
+        
+               
+                    setInterval(function(){name.innerHTML += '.'},500);
+                    setTimeout(function(){location.reload()},2000);
+                
+    }
+    function end(num1,num2,num3){
+        name.innerHTML =`${boxs[num1]} winner`;
+            document.getElementById('box'+num1).style.background = '#0d0';
+            document.getElementById('box'+num2).style.background = '#0d0';
+            document.getElementById('box'+num3).style.background = '#0d0';
+            setInterval(function(){name.innerHTML +='.'},500);
+            setTimeout(function(){location.reload()},2000);
+    }
+    function winner(){
+        for(let i=1;i<10;i++){
+            boxs[i]=document.getElementById('box'+i).innerHTML;
+        }
+        if(boxs[1] == boxs[2] && boxs[2] == boxs[3] && boxs[3] != ''){
+           
+            end(1,2,3);
+        }
+        else if(boxs[4] == boxs[5] && boxs[5] == boxs[6] && boxs[5] != ''){
+            end(4,5,6);
+            
+        }
+        else if(boxs[7] == boxs[8] && boxs[8] == boxs[9] && boxs[9] != ''){
+            end(7,8,9);
+            
+        }
+        else if(boxs[1] == boxs[4] && boxs[4] == boxs[7] && boxs[4] != ''){
+            end(1,4,7);
+            
+        }
+        else if(boxs[2] == boxs[5] && boxs[5] == boxs[8] && boxs[8] != ''){
+            end(2,5,8);
+            
+        }
+        else if(boxs[3] == boxs[6] && boxs[6] == boxs[9] && boxs[9] != ''){
+            end(3,6,9);
+            
+        }
+        else if(boxs[1] == boxs[5] && boxs[5] == boxs[9] && boxs[9] != ''){
+            end(1,5,9);
+            
+        }else if(boxs[3] == boxs[5] && boxs[5] == boxs[7] && boxs[7] != ''){
+            end(3,5,7);
+            
+        }
+       
+           
+
+
+
+
+
+
+
+
+    }
+    
+</script>
+</body>
+</html>
